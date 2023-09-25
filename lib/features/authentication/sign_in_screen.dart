@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/constants/gaps.dart';
+import 'package:flutter_final_project/constants/sizes.dart';
 
 class SignInScreen extends StatefulWidget {
   static const String routeName = "login";
@@ -18,7 +20,41 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _onScaffoldTap,
-      child: const Scaffold(),
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          title: const Text(
+            "MOOD",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        body: const Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: Sizes.size24,
+          ),
+          child: Column(
+            children: [
+              Gaps.v80,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Welcome!",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: Sizes.size20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
