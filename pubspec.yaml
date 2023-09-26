@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^4.10.0
   cloud_firestore: ^4.9.2
   firebase_storage: ^11.2.7
+  font_awesome_flutter: ^10.5.0
 
 dev_dependencies:
   flutter_test:
