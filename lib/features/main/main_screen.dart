@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/features/authentication/repos/authentication_repo.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerStatefulWidget {
   static const String routeName = "main";
   static const String routeURL = "/main";
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _HomeScreenState();
+  ConsumerState<MainScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<MainScreen> {
+class _HomeScreenState extends ConsumerState<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,10 @@ class _HomeScreenState extends State<MainScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              ref.read(authRepo).signOut();
+              context.go("/");
+            },
             icon: const FaIcon(
               FontAwesomeIcons.gear,
               color: Colors.white,

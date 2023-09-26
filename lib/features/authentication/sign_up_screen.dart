@@ -38,7 +38,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   }
 
   void _onSignUpTap() async {
-    print("SignUp Button was tapped!");
     ref.read(signUpForm.notifier).state = {
       "email": _email,
       "password": _password,
