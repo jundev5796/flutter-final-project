@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/constants/gaps.dart';
 import 'package:flutter_final_project/constants/sizes.dart';
-import 'package:flutter_final_project/features/authentication/sign_up_screen.dart';
 import 'package:go_router/go_router.dart';
 
-class SignInScreen extends StatefulWidget {
-  static const String routeName = "login";
-  static const String routeURL = "/login";
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  static const String routeName = "signup";
+  static const String routeURL = "/signup";
+  const SignUpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  void _onSignUpTap(BuildContext context) async {
-    context.pushNamed(SignUpScreen.routeName);
+class _SignUpScreenState extends State<SignUpScreen> {
+  void _onLoginTap(BuildContext context) {
+    context.pop();
   }
 
   void _onScaffoldTap() {
@@ -51,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Welcome!",
+                    "Join!",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: Sizes.size24,
@@ -140,7 +139,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           0), // This will stretch the button horizontally
                     ),
                     child: const Text(
-                      "Log in",
+                      "Create Account",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: Sizes.size18,
@@ -152,7 +151,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 300,
                   ),
                   TextButton(
-                    onPressed: () => _onSignUpTap(context),
+                    onPressed: () => _onLoginTap(context),
                     style: TextButton.styleFrom(
                       foregroundColor: const Color(0xFF0c64E0),
                       backgroundColor: const Color(0xFF374151),
@@ -168,7 +167,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           0), // This will stretch the button horizontally
                     ),
                     child: const Text(
-                      "Create an account",
+                      "Log in",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: Sizes.size18,
