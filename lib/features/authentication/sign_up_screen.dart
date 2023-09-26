@@ -2,20 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/constants/gaps.dart';
 import 'package:flutter_final_project/constants/sizes.dart';
 import 'package:flutter_final_project/features/authentication/sign_in_screen.dart';
+import 'package:flutter_final_project/features/authentication/view_models/signup_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   static const String routeName = "signup";
   static const String routeURL = "/signup";
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String _email = "";
+  String _password = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(() {
+      setState(() {
+        _email = _emailController.text;
+      });
+    });
+    _passwordController.addListener(() {
+      setState(() {
+        _password = _passwordController.text;
+      });
+    });
+  }
+
+  void _onSignUpTap() async {
+    print("SignUp Button was tapped!");
+    ref.read(signUpForm.notifier).state = {
+      "email": _email,
+      "password": _password,
+    };
+    await ref.read(signUpProvider.notifier).signUp();
+  }
+
   void _onLoginTap(BuildContext context) {
-    print("SignUp button tapped!");
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const SignInScreen()));
     // context.pop();
@@ -23,6 +54,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -74,16 +112,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       borderRadius: BorderRadius.circular(Sizes.size28),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
                         vertical: Sizes.size2,
                         horizontal: Sizes.size16,
                       ),
                       child: TextField(
-                        // controller: () {},
+                        controller: _emailController,
                         autocorrect: false,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Email",
                           hintStyle: TextStyle(
                             color: Colors.grey,
@@ -104,16 +142,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       borderRadius: BorderRadius.circular(Sizes.size28),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
                         vertical: Sizes.size2,
                         horizontal: Sizes.size16,
                       ),
                       child: TextField(
-                        // controller: _passwordController,
+                        controller: _passwordController,
                         autocorrect: false,
                         keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Password",
                           hintStyle: TextStyle(
                             color: Colors.grey,
@@ -127,7 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Gaps.v28,
                   TextButton(
-                    onPressed: () {},
+                    onPressed: _onSignUpTap,
                     style: TextButton.styleFrom(
                       foregroundColor: const Color(0xFF0c64E0),
                       backgroundColor: const Color(0xFF374151),
