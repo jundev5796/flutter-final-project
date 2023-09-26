@@ -4,23 +4,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'router.dart';
 import 'package:flutter_final_project/firebase_options.dart';
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  runApp(const MyApp()); // will add ProviderScope
+  runApp(
+    const ProviderScope(
+      // overrides: [
+      //   playbackConfigProvider
+      //       .overrideWith(() => PlaybackConfigViewModel(repository))
+      // ],
+      child: MyApp(),
+    ),
+  ); // will add ProviderScope
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

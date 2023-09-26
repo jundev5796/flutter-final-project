@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/constants/gaps.dart';
 import 'package:flutter_final_project/constants/sizes.dart';
+import 'package:flutter_final_project/features/authentication/sign_in_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -14,7 +15,10 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   void _onLoginTap(BuildContext context) {
-    context.pop();
+    print("SignUp button tapped!");
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const SignInScreen()));
+    // context.pop();
   }
 
   void _onScaffoldTap() {

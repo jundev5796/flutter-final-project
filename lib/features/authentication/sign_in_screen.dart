@@ -15,7 +15,8 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   void _onSignUpTap(BuildContext context) async {
-    context.pushNamed(SignUpScreen.routeName);
+    context.pop();
+    // context.pushNamed(SignUpScreen.routeName);
   }
 
   void _onScaffoldTap() {
@@ -29,6 +30,7 @@ class _SignInScreenState extends State<SignInScreen> {
       child: Scaffold(
         backgroundColor: const Color(0xFF1F2937),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: const Color(0xFF1F2937),
           elevation: 0,
           title: const Text(

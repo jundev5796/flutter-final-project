@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class MainScreen extends StatefulWidget {
+  static const String routeName = "main";
+  static const String routeURL = "/main";
+  const MainScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
