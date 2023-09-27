@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/constants/sizes.dart';
 import 'package:flutter_final_project/features/authentication/repos/authentication_repo.dart';
+import 'package:flutter_final_project/features/main/tab_screens/home_screen.dart';
+import 'package:flutter_final_project/features/main/tab_screens/post_screen.dart';
 import 'package:flutter_final_project/features/main/widgets/nav_tab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -76,7 +78,18 @@ class _HomeScreenState extends ConsumerState<MainScreen> {
           )
         ],
       ),
-      body: const Stack(),
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0,
+            child: const HomeScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 1,
+            child: const PostScreen(),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
         color: const Color(0xFF1F2937),
