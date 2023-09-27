@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/constants/gaps.dart';
 import 'package:flutter_final_project/constants/sizes.dart';
 import 'package:flutter_final_project/features/authentication/sign_up_screen.dart';
+import 'package:flutter_final_project/features/authentication/view_models/signin_view_model.dart';
+import 'package:flutter_final_project/features/authentication/view_models/signup_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,16 +17,64 @@ class SignInScreen extends ConsumerStatefulWidget {
 }
 
 class _SignInScreenState extends ConsumerState<SignInScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  Map<String, String> formData = {};
+  String _email = "";
+  String _password = "";
+  bool _obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(() {
+      setState(() {
+        _email = _emailController.text;
+      });
+    });
+    _passwordController.addListener(() {
+      setState(() {
+        _password = _passwordController.text;
+      });
+    });
+  }
 
   void _onSignUpTap(BuildContext context) async {
     context.pop();
     // context.pushNamed(SignUpScreen.routeName);
   }
 
+  void _onLoginTap() {
+    ref.read(loginProvider.notifier).login(_email, _password, context);
+    // if (_formKey.currentState != null) {
+    //   if (_formKey.currentState!.validate()) {
+    //     _formKey.currentState!.save();
+    //     ref.read(loginProvider.notifier).login(
+    //           formData["email"]!,
+    //           formData["password"]!,
+    //           context,
+    //         );
+    //     // context.goNamed(InterestsScreen.routeName);
+    //   }
+    // }
+  }
+
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
+  }
+
+  void _toggleObscureText() {
+    _obscureText = !_obscureText;
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -77,16 +127,16 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       ),
                       borderRadius: BorderRadius.circular(Sizes.size28),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
                         vertical: Sizes.size2,
                         horizontal: Sizes.size16,
                       ),
                       child: TextField(
-                        // controller: () {},
+                        controller: _emailController,
                         autocorrect: false,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Email",
                           hintStyle: TextStyle(
                             color: Colors.grey,
@@ -107,16 +157,17 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       ),
                       borderRadius: BorderRadius.circular(Sizes.size28),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
                         vertical: Sizes.size2,
                         horizontal: Sizes.size16,
                       ),
                       child: TextField(
-                        // controller: _passwordController,
+                        controller: _passwordController,
                         autocorrect: false,
                         keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
+                        obscureText: _obscureText,
+                        decoration: const InputDecoration(
                           hintText: "Password",
                           hintStyle: TextStyle(
                             color: Colors.grey,
@@ -130,7 +181,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   ),
                   Gaps.v28,
                   TextButton(
-                    onPressed: () {},
+                    onPressed: _onLoginTap,
                     style: TextButton.styleFrom(
                       foregroundColor: const Color(0xFF0c64E0),
                       backgroundColor: const Color(0xFF374151),

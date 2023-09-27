@@ -12,8 +12,8 @@ final routerProvider = Provider((ref) {
     redirect: (context, state) {
       final isLoggedIn = ref.read(authRepo).isLoggedIn;
       if (!isLoggedIn) {
-        if (state.namedLocation != SignInScreen.routeURL &&
-            state.namedLocation != SignUpScreen.routeURL) {
+        if (state.matchedLocation != SignInScreen.routeURL &&
+            state.matchedLocation != SignUpScreen.routeURL) {
           return SignUpScreen.routeURL;
         }
       }

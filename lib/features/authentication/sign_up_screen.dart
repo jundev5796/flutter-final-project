@@ -43,7 +43,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       "email": _email,
       "password": _password,
     };
-    await ref.read(signUpProvider.notifier).signUp();
+    await ref.read(signUpProvider.notifier).signUp(context);
   }
 
   void _onLoginTap(BuildContext context) {
