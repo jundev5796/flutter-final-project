@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/constants/sizes.dart';
 import 'package:flutter_final_project/features/authentication/repos/authentication_repo.dart';
+import 'package:flutter_final_project/features/main/widgets/nav_tab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   static const String routeName = "main";
-  static const String routeURL = "/main";
-  const MainScreen({super.key});
+
+  final String tab;
+
+  const MainScreen({
+    super.key,
+    required this.tab,
+  });
 
   @override
   ConsumerState<MainScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends ConsumerState<MainScreen> {
+  final List<String> _tabs = [
+    "home",
+    "post",
+  ];
+
+  late int _selectedIndex = _tabs.indexOf(widget.tab);
+
+  void _onTap(int index) {
+    context.go("/${_tabs[index]}");
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   void _onItemSelected(String value) {
     switch (value) {
       case 'Sign out':
@@ -54,6 +75,32 @@ class _HomeScreenState extends ConsumerState<MainScreen> {
             ],
           )
         ],
+      ),
+      body: const Stack(),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        color: const Color(0xFF1F2937),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: Sizes.size16,
+            horizontal: Sizes.size12,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              NavTab(
+                isSelected: _selectedIndex == 0,
+                icon: FontAwesomeIcons.house,
+                onTap: () => _onTap(0),
+              ),
+              NavTab(
+                isSelected: _selectedIndex == 1,
+                icon: FontAwesomeIcons.pen,
+                onTap: () => _onTap(1),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

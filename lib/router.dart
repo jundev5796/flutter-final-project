@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 final routerProvider = Provider((ref) {
   ref.watch(authState);
   return GoRouter(
-    initialLocation: MainScreen.routeURL,
+    initialLocation: "/home",
     redirect: (context, state) {
       final isLoggedIn = ref.read(authRepo).isLoggedIn;
       if (!isLoggedIn) {
@@ -31,14 +31,12 @@ final routerProvider = Provider((ref) {
         builder: (context, state) => const SignInScreen(),
       ),
       GoRoute(
-        path: MainScreen.routeURL,
-        // path: "/:tab(home|post)",
+        path: "/:tab(home|post)",
         name: MainScreen.routeName,
-        builder: (context, state) => const MainScreen(),
-        // builder: (context, state) {
-        //   final tab = state.pathParameters["tab"]!;
-        //   return MainScreen(tab: tab);
-        // },
+        builder: (context, state) {
+          final tab = state.pathParameters["tab"]!;
+          return MainScreen(tab: tab);
+        },
       ),
     ],
   );
