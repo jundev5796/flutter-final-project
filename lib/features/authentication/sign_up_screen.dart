@@ -21,6 +21,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   String _email = "";
   String _password = "";
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -53,6 +54,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
+  }
+
+  void _toggleObscureText() {
+    _obscureText = !_obscureText;
+    setState(() {});
   }
 
   @override
@@ -150,6 +156,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         controller: _passwordController,
                         autocorrect: false,
                         keyboardType: TextInputType.visiblePassword,
+                        obscureText: _obscureText,
                         decoration: const InputDecoration(
                           hintText: "Password",
                           hintStyle: TextStyle(

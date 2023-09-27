@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/constants/gaps.dart';
 import 'package:flutter_final_project/constants/sizes.dart';
 import 'package:flutter_final_project/features/authentication/sign_up_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends ConsumerStatefulWidget {
   static const String routeName = "login";
   static const String routeURL = "/login";
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  ConsumerState<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends ConsumerState<SignInScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   void _onSignUpTap(BuildContext context) async {
     context.pop();
     // context.pushNamed(SignUpScreen.routeName);

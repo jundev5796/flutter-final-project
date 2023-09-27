@@ -14,6 +14,15 @@ class MainScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<MainScreen> {
+  void _onItemSelected(String value) {
+    switch (value) {
+      case 'Sign out':
+        ref.read(authRepo).signOut();
+        context.go("/");
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,15 +39,19 @@ class _HomeScreenState extends ConsumerState<MainScreen> {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              ref.read(authRepo).signOut();
-              context.go("/");
-            },
+          PopupMenuButton<String>(
+            offset: const Offset(0, 40),
             icon: const FaIcon(
               FontAwesomeIcons.gear,
               color: Colors.white,
             ),
+            onSelected: _onItemSelected,
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'Sign out',
+                child: Text('Sign out'),
+              ),
+            ],
           )
         ],
       ),
