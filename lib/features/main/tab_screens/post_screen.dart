@@ -10,8 +10,17 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  final TextEditingController _controller = TextEditingController();
+
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
+  }
+
+  void _appendEmoji(String emoji) {
+    _controller.text = _controller.text + emoji;
+    _controller.selection = TextSelection.fromPosition(
+      TextPosition(offset: _controller.text.length),
+    );
   }
 
   @override
@@ -49,18 +58,18 @@ class _PostScreenState extends State<PostScreen> {
                   ),
                   borderRadius: BorderRadius.circular(Sizes.size14),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
                     vertical: Sizes.size2,
                     horizontal: Sizes.size16,
                   ),
                   child: TextField(
-                    // controller: (), // Uncomment this if you want to use a controller
+                    controller: _controller,
                     autocorrect: true,
                     keyboardType: TextInputType.multiline,
-                    maxLines: null, // Makes it expandable vertically
-                    minLines: 7, // Set this to your desired minimum lines
-                    decoration: InputDecoration(
+                    maxLines: null,
+                    minLines: 7,
+                    decoration: const InputDecoration(
                       hintText: "Write it down here!",
                       hintStyle: TextStyle(
                         color: Colors.grey,
@@ -71,6 +80,88 @@ class _PostScreenState extends State<PostScreen> {
                     ),
                   ),
                 ),
+              ),
+              Gaps.v40,
+              const Row(
+                children: [
+                  Text(
+                    "What's your mood?",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: Sizes.size18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              Gaps.v10,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: const Text(
+                      '😀',
+                      style: TextStyle(
+                        fontSize: Sizes.size28,
+                      ),
+                    ),
+                    onPressed: () => _appendEmoji('😀'),
+                  ),
+                  IconButton(
+                    icon: const Text(
+                      '😍',
+                      style: TextStyle(
+                        fontSize: Sizes.size28,
+                      ),
+                    ),
+                    onPressed: () => _appendEmoji('😍'),
+                  ),
+                  IconButton(
+                    icon: const Text(
+                      '😊',
+                      style: TextStyle(
+                        fontSize: Sizes.size28,
+                      ),
+                    ),
+                    onPressed: () => _appendEmoji('😊'),
+                  ),
+                  IconButton(
+                    icon: const Text(
+                      '🥳',
+                      style: TextStyle(
+                        fontSize: Sizes.size28,
+                      ),
+                    ),
+                    onPressed: () => _appendEmoji('🥳'),
+                  ),
+                  IconButton(
+                    icon: const Text(
+                      '😭',
+                      style: TextStyle(
+                        fontSize: Sizes.size28,
+                      ),
+                    ),
+                    onPressed: () => _appendEmoji('😭'),
+                  ),
+                  IconButton(
+                    icon: const Text(
+                      '🤬',
+                      style: TextStyle(
+                        fontSize: Sizes.size28,
+                      ),
+                    ),
+                    onPressed: () => _appendEmoji('🤬'),
+                  ),
+                  IconButton(
+                    icon: const Text(
+                      '🫠',
+                      style: TextStyle(
+                        fontSize: Sizes.size28,
+                      ),
+                    ),
+                    onPressed: () => _appendEmoji('🫠'),
+                  ),
+                ],
               ),
             ],
           ),
