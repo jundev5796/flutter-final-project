@@ -13,10 +13,6 @@ void main() async {
 
   runApp(
     const ProviderScope(
-      // overrides: [
-      //   playbackConfigProvider
-      //       .overrideWith(() => PlaybackConfigViewModel(repository))
-      // ],
       child: MyApp(),
     ),
   ); // will add ProviderScope

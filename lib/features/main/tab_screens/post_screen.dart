@@ -1,26 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/constants/gaps.dart';
 import 'package:flutter_final_project/constants/sizes.dart';
+import 'package:flutter_final_project/features/main/main_screen.dart';
+import 'package:flutter_final_project/features/main/tab_screens/auth_provider.dart';
+import 'package:flutter_final_project/features/main/tab_screens/home_screen.dart';
+import 'package:flutter_final_project/features/main/tab_screens/models/mood_post_model.dart';
+import 'package:flutter_final_project/features/main/tab_screens/repos/mood_post_repo.dart';
+import 'package:flutter_final_project/features/main/tab_screens/view_models/mood_post_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class PostScreen extends StatefulWidget {
+class PostScreen extends ConsumerStatefulWidget {
   const PostScreen({super.key});
 
   @override
-  State<PostScreen> createState() => _PostScreenState();
+  ConsumerState<PostScreen> createState() => _PostScreenState();
 }
 
-class _PostScreenState extends State<PostScreen> {
+class _PostScreenState extends ConsumerState<PostScreen> {
   final TextEditingController _controller = TextEditingController();
+  String? selectedEmoji;
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
   }
 
-  void _appendEmoji(String emoji) {
-    _controller.text = _controller.text + emoji;
-    _controller.selection = TextSelection.fromPosition(
-      TextPosition(offset: _controller.text.length),
+  Future<void> _createMoodPost() async {
+    final moodPost = MoodPostModel(
+      created: DateTime.now().toIso8601String(),
+      uid: ref.watch(currentUserUidProvider)!,
+      emojiType: selectedEmoji ?? '',
+      id: '',
+      text: _controller.text,
     );
+
+    await ref.read(moodPostProvider.notifier).createMoodPost(moodPost);
+
+    context.go('/home');
   }
 
   @override
@@ -105,7 +121,11 @@ class _PostScreenState extends State<PostScreen> {
                         fontSize: Sizes.size28,
                       ),
                     ),
-                    onPressed: () => _appendEmoji('😀'),
+                    onPressed: () {
+                      setState(() {
+                        selectedEmoji = '😀';
+                      });
+                    },
                   ),
                   IconButton(
                     icon: const Text(
@@ -114,7 +134,11 @@ class _PostScreenState extends State<PostScreen> {
                         fontSize: Sizes.size28,
                       ),
                     ),
-                    onPressed: () => _appendEmoji('😍'),
+                    onPressed: () {
+                      setState(() {
+                        selectedEmoji = '😍';
+                      });
+                    },
                   ),
                   IconButton(
                     icon: const Text(
@@ -123,7 +147,11 @@ class _PostScreenState extends State<PostScreen> {
                         fontSize: Sizes.size28,
                       ),
                     ),
-                    onPressed: () => _appendEmoji('😊'),
+                    onPressed: () {
+                      setState(() {
+                        selectedEmoji = '😊';
+                      });
+                    },
                   ),
                   IconButton(
                     icon: const Text(
@@ -132,7 +160,11 @@ class _PostScreenState extends State<PostScreen> {
                         fontSize: Sizes.size28,
                       ),
                     ),
-                    onPressed: () => _appendEmoji('🥳'),
+                    onPressed: () {
+                      setState(() {
+                        selectedEmoji = '🥳';
+                      });
+                    },
                   ),
                   IconButton(
                     icon: const Text(
@@ -141,7 +173,11 @@ class _PostScreenState extends State<PostScreen> {
                         fontSize: Sizes.size28,
                       ),
                     ),
-                    onPressed: () => _appendEmoji('😭'),
+                    onPressed: () {
+                      setState(() {
+                        selectedEmoji = '😭';
+                      });
+                    },
                   ),
                   IconButton(
                     icon: const Text(
@@ -150,7 +186,11 @@ class _PostScreenState extends State<PostScreen> {
                         fontSize: Sizes.size28,
                       ),
                     ),
-                    onPressed: () => _appendEmoji('🤬'),
+                    onPressed: () {
+                      setState(() {
+                        selectedEmoji = '🤬';
+                      });
+                    },
                   ),
                   IconButton(
                     icon: const Text(
@@ -159,7 +199,11 @@ class _PostScreenState extends State<PostScreen> {
                         fontSize: Sizes.size28,
                       ),
                     ),
-                    onPressed: () => _appendEmoji('🫠'),
+                    onPressed: () {
+                      setState(() {
+                        selectedEmoji = '🫠';
+                      });
+                    },
                   ),
                 ],
               ),
@@ -169,7 +213,7 @@ class _PostScreenState extends State<PostScreen> {
                   horizontal: Sizes.size40,
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: _createMoodPost,
                   style: TextButton.styleFrom(
                     foregroundColor: const Color(0xFF0c64E0),
                     backgroundColor: const Color(0xFF374151),

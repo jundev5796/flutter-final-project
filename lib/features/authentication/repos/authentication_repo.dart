@@ -20,8 +20,8 @@ class AuthenticationRepository {
     await _firebaseAuth.signOut();
   }
 
-  Future<void> signIn(String email, String password) async {
-    await _firebaseAuth.signInWithEmailAndPassword(
+  Future<UserCredential> signIn(String email, String password) async {
+    return await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
