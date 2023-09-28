@@ -94,7 +94,7 @@ class _PostScreenState extends State<PostScreen> {
                   ),
                 ],
               ),
-              Gaps.v10,
+              Gaps.v5,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -162,6 +162,36 @@ class _PostScreenState extends State<PostScreen> {
                     onPressed: () => _appendEmoji('🫠'),
                   ),
                 ],
+              ),
+              Gaps.v40,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size40,
+                ),
+                child: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    foregroundColor: const Color(0xFF0c64E0),
+                    backgroundColor: const Color(0xFF374151),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Sizes.size10,
+                      horizontal: Sizes.size16,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Sizes.size28),
+                      side: BorderSide(color: Colors.grey.shade400),
+                    ),
+                    minimumSize: const Size(double.infinity, 0),
+                  ),
+                  child: const Text(
+                    "Post",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: Sizes.size18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
