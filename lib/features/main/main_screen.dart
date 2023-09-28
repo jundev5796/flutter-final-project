@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/constants/sizes.dart';
 import 'package:flutter_final_project/features/authentication/repos/authentication_repo.dart';
+import 'package:flutter_final_project/features/main/tab_screens/auth_provider.dart';
 import 'package:flutter_final_project/features/main/tab_screens/home_screen.dart';
 import 'package:flutter_final_project/features/main/tab_screens/post_screen.dart';
 import 'package:flutter_final_project/features/main/widgets/nav_tab.dart';
@@ -10,31 +11,19 @@ import 'package:go_router/go_router.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   static const String routeName = "main";
-
   final String tab;
-
-  const MainScreen({
-    super.key,
-    required this.tab,
-  });
+  const MainScreen({super.key, required this.tab});
 
   @override
   ConsumerState<MainScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends ConsumerState<MainScreen> {
-  final List<String> _tabs = [
-    "home",
-    "post",
-  ];
-
-  late int _selectedIndex = _tabs.indexOf(widget.tab);
+  final List<String> _tabs = ["home", "post"];
 
   void _onTap(int index) {
-    context.go("/${_tabs[index]}");
-    setState(() {
-      _selectedIndex = index;
-    });
+    ref.read(currentTabIndexProvider.notifier).state = index;
+    context.go("/${_tabs[index]}"); // Navigate to the route
   }
 
   void _onItemSelected(String value) {
@@ -48,6 +37,8 @@ class _HomeScreenState extends ConsumerState<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int selectedIndex = ref.watch(currentTabIndexProvider.notifier).state;
+
     return Scaffold(
       backgroundColor: const Color(0xFF1F2937),
       appBar: AppBar(
@@ -81,11 +72,11 @@ class _HomeScreenState extends ConsumerState<MainScreen> {
       body: Stack(
         children: [
           Offstage(
-            offstage: _selectedIndex != 0,
+            offstage: selectedIndex != 0,
             child: const HomeScreen(),
           ),
           Offstage(
-            offstage: _selectedIndex != 1,
+            offstage: selectedIndex != 1,
             child: const PostScreen(),
           ),
         ],
@@ -102,12 +93,12 @@ class _HomeScreenState extends ConsumerState<MainScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NavTab(
-                isSelected: _selectedIndex == 0,
+                isSelected: selectedIndex == 0,
                 icon: FontAwesomeIcons.house,
                 onTap: () => _onTap(0),
               ),
               NavTab(
-                isSelected: _selectedIndex == 1,
+                isSelected: selectedIndex == 1,
                 icon: FontAwesomeIcons.pen,
                 onTap: () => _onTap(1),
               ),

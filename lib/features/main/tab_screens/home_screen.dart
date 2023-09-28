@@ -11,7 +11,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final posts = ref.watch(moodPostProvider).toList();
+    final posts = ref.watch(moodPostProvider).toList().reversed.toList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(

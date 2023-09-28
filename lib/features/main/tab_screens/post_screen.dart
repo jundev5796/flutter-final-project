@@ -36,6 +36,10 @@ class _PostScreenState extends ConsumerState<PostScreen> {
 
     await ref.read(moodPostProvider.notifier).createMoodPost(moodPost);
 
+    // Set the current tab to the home screen
+    ref.read(currentTabIndexProvider.notifier).state = 0;
+
+    // Navigate to HomeScreen tab.
     context.go('/home');
   }
 
